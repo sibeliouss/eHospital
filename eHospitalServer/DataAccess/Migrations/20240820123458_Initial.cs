@@ -18,7 +18,7 @@ namespace DataAccess.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Specialty = table.Column<int>(type: "int", nullable: false),
                     WorkingDays = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AppointmentPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                    AppointmentPrice = table.Column<decimal>(type: "money", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -81,9 +81,10 @@ namespace DataAccess.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     DoctorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     PatientId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    EpicrisisReport = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Price = table.Column<decimal>(type: "money", nullable: false),
                     IsItFinished = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
