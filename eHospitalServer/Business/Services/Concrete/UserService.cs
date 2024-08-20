@@ -15,46 +15,48 @@ public sealed class UserService(
 {
     public async Task<Result<string>> CreateUserAsync(CreateUserDto request, CancellationToken cancellationToken)
     {
-        if(request.Email is not null)
+        // Check if the email already exists
+        if (request.Email is not null)
         {
-            bool isEmailExist = await userManager.Users.AnyAsync(p=>p.Email == request.Email);
-            if(isEmailExist)
+            bool isEmailExist = await userManager.Users.AnyAsync(p => p.Email == request.Email, cancellationToken);
+            if (isEmailExist)
             {
-                return Result<string>.Failure("Email is already exist.");
+                return Result<string>.Failure("Email already exists.");
             }
         }
 
-        if(request.IdentityNumber != "11111111111")
+        // Check if the identity number is not the default and already exists
+        if (request.IdentityNumber != "11111111111")
         {
-            bool isIdentityNumberExist = await userManager.Users.AnyAsync(p => p.IdentityNumber == request.IdentityNumber);
+            bool isIdentityNumberExist = await userManager.Users.AnyAsync(p => p.IdentityNumber == request.IdentityNumber, cancellationToken);
             if (isIdentityNumberExist)
             {
-                return Result<string>.Failure( "IdentityNumber is already exist.");
+                return Result<string>.Failure("Identity number already exists.");
             }
         }
-        //Create user
+
+        // Create user
         User user = mapper.Map<User>(request);
 
-            bool isUserNameExist = await userManager.Users.AnyAsync(p => p.UserName == user.UserName);
-            if (isUserNameExist)
-            {
-                return Result<string>.Failure( "UserName is already exist.");
-            }
-        
-        Random random = new();
-
+        // Check if the username already exists
+        bool isUserNameExist = await userManager.Users.AnyAsync(p => p.UserName == user.UserName, cancellationToken);
+        if (isUserNameExist)
+        {
+            return Result<string>.Failure("Username already exists.");
+        }
 
         if (request.Specialty is not null)
         {
             user.DoctorDetail = new DoctorDetail()
             {
                 Specialty = (Specialty)request.Specialty,
-                WorkingDays = request.WorkingDays ?? new()
+                WorkingDays = request.WorkingDays ?? new List<string>()
             };
         }
 
         IdentityResult result;
 
+        // Create user with or without password
         if (request.Password is not null)
         {
             result = await userManager.CreateAsync(user, request.Password);
@@ -69,43 +71,43 @@ public sealed class UserService(
             return Result<string>.Failure(500, result.Errors.Select(s => s.Description).ToList());
         }
 
-        return Result<string>.Succeed("User create is successful");
+        return Result<string>.Succeed("User creation is successful.");
     }
+
     public async Task<Result<Guid>> CreatePatientAsync(CreatePatientDto request, CancellationToken cancellationToken)
     {
+        // Check if the email already exists
         if (request.Email is not null)
         {
-            bool isEmailExist = await userManager.Users.AnyAsync(p => p.Email == request.Email);
+            bool isEmailExist = await userManager.Users.AnyAsync(p => p.Email == request.Email, cancellationToken);
             if (isEmailExist)
             {
-                return Result<Guid>.Failure( "Email is already exist.");
+                return Result<Guid>.Failure("Email already exists.");
             }
         }
 
+        // Check if the identity number is not the default and already exists
         if (request.IdentityNumber != "11111111111")
         {
-            bool isIdentityNumberExist = await userManager.Users.AnyAsync(p => p.IdentityNumber == request.IdentityNumber);
+            bool isIdentityNumberExist = await userManager.Users.AnyAsync(p => p.IdentityNumber == request.IdentityNumber, cancellationToken);
             if (isIdentityNumberExist)
             {
-                return Result<Guid>.Failure( "IdentityNumber is already exist.");
+                return Result<Guid>.Failure("Identity number already exists.");
             }
         }
 
         User user = mapper.Map<User>(request);
-        user.UserType= UserType.Patient;
+        user.UserType = UserType.Patient;
 
+        // Ensure unique username
         int number = 0;
-        while (await userManager.Users.AnyAsync(p => p.UserName == user.UserName))
+        while (await userManager.Users.AnyAsync(p => p.UserName == user.UserName, cancellationToken))
         {
-
             number++;
             user.UserName += number;
         }
 
-        Random random = new();
-        
-
-        IdentityResult result = await userManager.CreateAsync(user);  
+        IdentityResult result = await userManager.CreateAsync(user);
 
         if (!result.Succeeded)
         {

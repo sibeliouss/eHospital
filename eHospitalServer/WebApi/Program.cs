@@ -1,6 +1,18 @@
+using System.Security.Claims;
 using Business.DependencyResolvers;
+using WebApi.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(builder =>
+    {
+        builder.AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader();
+    });
+});
 
 // Add services to the container.
 builder.Services.AddBusinessServices(builder.Configuration);
@@ -18,10 +30,18 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+ExtensionsMiddleware.CreateFirstUser(app);
+
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
+app.UseCors();  
+    
+app.MapControllers()
+    .RequireAuthorization(policy =>
+    {
+        policy.RequireClaim(ClaimTypes.NameIdentifier);
+        policy.AddAuthenticationSchemes("Bearer");
+    });
 
-app.MapControllers();
 
 app.Run();

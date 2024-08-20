@@ -102,6 +102,9 @@ namespace DataAccess.Migrations
                     b.Property<DateOnly?>("DateOfBirth")
                         .HasColumnType("date");
 
+                    b.Property<Guid?>("DoctorDetailId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
@@ -109,6 +112,10 @@ namespace DataAccess.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IdentityNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -163,6 +170,8 @@ namespace DataAccess.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("DoctorDetailId");
+
                     b.ToTable("Users");
                 });
 
@@ -203,6 +212,15 @@ namespace DataAccess.Migrations
                     b.Navigation("Doctor");
 
                     b.Navigation("Patient");
+                });
+
+            modelBuilder.Entity("Entities.Concrete.User", b =>
+                {
+                    b.HasOne("Entities.Concrete.DoctorDetail", "DoctorDetail")
+                        .WithMany()
+                        .HasForeignKey("DoctorDetailId");
+
+                    b.Navigation("DoctorDetail");
                 });
 #pragma warning restore 612, 618
         }

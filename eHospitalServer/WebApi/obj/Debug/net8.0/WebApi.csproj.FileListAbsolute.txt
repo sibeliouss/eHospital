@@ -150,3 +150,6 @@
 /Users/sozey/Projects/eHospital/eHospitalServer/WebApi/obj/Debug/net8.0/WebApi.pdb
 /Users/sozey/Projects/eHospital/eHospitalServer/WebApi/obj/Debug/net8.0/WebApi.genruntimeconfig.cache
 /Users/sozey/Projects/eHospital/eHospitalServer/WebApi/obj/Debug/net8.0/ref/WebApi.dll
+/Users/sozey/Projects/eHospital/eHospitalServer/WebApi/bin/Debug/net8.0/AutoMapper.dll
+/Users/sozey/Projects/eHospital/eHospitalServer/WebApi/bin/Debug/net8.0/CTS.Result.dll
+/Users/sozey/Projects/eHospital/eHospitalServer/WebApi/bin/Debug/net8.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll

@@ -46,6 +46,7 @@ namespace DataAccess.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IdentityNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
@@ -54,6 +55,7 @@ namespace DataAccess.Migrations
                     UserType = table.Column<int>(type: "int", nullable: false),
                     RefreshToken = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     RefreshTokenExpires = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DoctorDetailId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -72,6 +74,11 @@ namespace DataAccess.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Users_DoctorDetails_DoctorDetailId",
+                        column: x => x.DoctorDetailId,
+                        principalTable: "DoctorDetails",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -111,6 +118,11 @@ namespace DataAccess.Migrations
                 name: "IX_Appointments_PatientId",
                 table: "Appointments",
                 column: "PatientId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_DoctorDetailId",
+                table: "Users",
+                column: "DoctorDetailId");
         }
 
         /// <inheritdoc />
@@ -120,13 +132,13 @@ namespace DataAccess.Migrations
                 name: "Appointments");
 
             migrationBuilder.DropTable(
-                name: "DoctorDetails");
-
-            migrationBuilder.DropTable(
                 name: "Roles");
 
             migrationBuilder.DropTable(
                 name: "Users");
+
+            migrationBuilder.DropTable(
+                name: "DoctorDetails");
         }
     }
 }
