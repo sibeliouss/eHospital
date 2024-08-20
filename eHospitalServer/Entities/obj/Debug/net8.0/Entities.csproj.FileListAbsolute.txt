@@ -1,0 +1,13 @@
+/Users/sozey/Projects/eHospital/eHospitalServer/Entities/bin/Debug/net8.0/Entities.deps.json
+/Users/sozey/Projects/eHospital/eHospitalServer/Entities/bin/Debug/net8.0/Entities.dll
+/Users/sozey/Projects/eHospital/eHospitalServer/Entities/bin/Debug/net8.0/Entities.pdb
+/Users/sozey/Projects/eHospital/eHospitalServer/Entities/obj/Debug/net8.0/Entities.csproj.AssemblyReference.cache
+/Users/sozey/Projects/eHospital/eHospitalServer/Entities/obj/Debug/net8.0/Entities.GeneratedMSBuildEditorConfig.editorconfig
+/Users/sozey/Projects/eHospital/eHospitalServer/Entities/obj/Debug/net8.0/Entities.AssemblyInfoInputs.cache
+/Users/sozey/Projects/eHospital/eHospitalServer/Entities/obj/Debug/net8.0/Entities.AssemblyInfo.cs
+/Users/sozey/Projects/eHospital/eHospitalServer/Entities/obj/Debug/net8.0/Entities.csproj.CoreCompileInputs.cache
+/Users/sozey/Projects/eHospital/eHospitalServer/Entities/obj/Debug/net8.0/Entities.sourcelink.json
+/Users/sozey/Projects/eHospital/eHospitalServer/Entities/obj/Debug/net8.0/Entities.dll
+/Users/sozey/Projects/eHospital/eHospitalServer/Entities/obj/Debug/net8.0/refint/Entities.dll
+/Users/sozey/Projects/eHospital/eHospitalServer/Entities/obj/Debug/net8.0/Entities.pdb
+/Users/sozey/Projects/eHospital/eHospitalServer/Entities/obj/Debug/net8.0/ref/Entities.dll
